@@ -7,14 +7,34 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@expo/vector-icons": "^10.0.1",
     "expo": "^32.0.0",
     "react": "16.5.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
-    "react-native-vector-icons": "^6.4.2",
-    "react-navigation": "^3.8.1"
+    "react-navigation": "^3.8.1",
+    "styled-components": "^4.2.0"
   },
   "devDependencies": {
-    "babel-preset-expo": "^5.0.0"
+    "babel-eslint": "^10.0.1",
+    "babel-preset-expo": "^5.0.0",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.17.1",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-react": "^7.12.4"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MSekrst/my-blood-pressure"
+  },
+  "author": {
+    "email": "sekrst.matija@gmail.com",
+    "name": "Matija Šekrst"
+  },
+  "keywords": [
+    "React",
+    "React Native",
+    "Health"
+  ],
   "private": true
 }
