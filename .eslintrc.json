@@ -39,6 +39,7 @@
     ],
     "max-len": ["warn", 120],
     "one-var": "off",
+    "object-curly-newline": "off",
     "operator-linebreak": "off",
     "react/prop-types": "off",
     "react/jsx-indent": "off",
@@ -46,6 +47,7 @@
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "react/jsx-no-bind": "off",
     "react/sort-comp": "off",
+    "react/destructuring-assignment": "off",
     "semi": [2, "never"]
   },
   "globals": {
