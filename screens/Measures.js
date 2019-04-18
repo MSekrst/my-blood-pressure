@@ -1,9 +1,10 @@
 import React from 'react'
-import { Text, Button } from 'react-native'
+import { Text } from 'react-native'
 import { createAppContainer, createStackNavigator } from 'react-navigation'
 
 import AddMeasures from './AddMeasure'
-import { FlexView } from '../components'
+import { FlexView, FloatingButton } from '../components'
+import * as I from '../icons'
 
 class Measures extends React.Component {
   static navigationOptions = {
@@ -14,7 +15,9 @@ class Measures extends React.Component {
     return (
       <FlexView>
         <Text>Measures</Text>
-        <Button title="Add measure" onPress={() => this.props.navigation.navigate('AddMeasures')} />
+        <FloatingButton onPress={() => this.props.navigation.navigate('AddMeasures')}>
+          <I.Add />
+        </FloatingButton>
       </FlexView>
     )
   }

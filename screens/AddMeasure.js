@@ -1,17 +1,19 @@
 import React from 'react'
-import { Button, Animated, KeyboardAvoidingView } from 'react-native'
+import { KeyboardAvoidingView, Image } from 'react-native'
 
-import { NumberInput, FlexView } from '../components'
+import { NumberInput, FlexView, Button } from '../components'
 import { getData, storeData } from '../modules'
-import { MEASURES_STORAGE_KEY, SCREEN_WITH_HEADER_TABS_HEIGHT, HEADER_NAVIGATION_HEIGHT } from '../const'
+import { MEASURES_STORAGE_KEY, HEADER_NAVIGATION_HEIGHT } from '../const'
+import { colors } from '../styles'
+import logo from '../assets/logo.png'
 
 class AddMeasure extends React.Component {
   static navigationOptions = {
     headerTitle: 'Add measure',
-    headerTitleStyle: { width: 200 },
+    headerTitleStyle: { width: 200, color: colors.primary },
   }
 
-  state = { heightAnimation: new Animated.Value(SCREEN_WITH_HEADER_TABS_HEIGHT) }
+  state = {}
 
   secondInput = React.createRef()
 
@@ -53,6 +55,7 @@ class AddMeasure extends React.Component {
         keyboardVerticalOffset={HEADER_NAVIGATION_HEIGHT + 50}
       >
         <FlexView>
+          <Image style={{ width: 100, height: 100, marginBottom: 25 }} source={logo} />
           <NumberInput
             autoFocus
             blurOnSubmit={false}
@@ -81,7 +84,7 @@ class AddMeasure extends React.Component {
             onChangeText={this.setHearthRate}
             onSubmitEditing={this.saveMeasure}
           />
-          <Button title="Save" onPress={this.saveMeasure} />
+          <Button onPress={this.saveMeasure}>Save</Button>
         </FlexView>
       </KeyboardAvoidingView>
     )

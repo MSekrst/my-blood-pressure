@@ -19,5 +19,6 @@ export const getData = async key => {
   }
 }
 
-// import { MEASURES_STORAGE_KEY } from '../data'
+// import { MEASURES_STORAGE_KEY } from '../const'
+
 // AsyncStorage.removeItem(MEASURES_STORAGE_KEY)
