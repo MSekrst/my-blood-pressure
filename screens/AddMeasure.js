@@ -1,11 +1,18 @@
 import React from 'react'
-import { KeyboardAvoidingView, Image } from 'react-native'
+import { KeyboardAvoidingView } from 'react-native'
+import styled from 'styled-components/native'
 
 import { NumberInput, FlexView, Button } from '../components'
 import { getData, storeData } from '../modules'
 import { MEASURES_STORAGE_KEY, HEADER_NAVIGATION_HEIGHT } from '../const'
 import { colors } from '../styles'
 import logo from '../assets/logo.png'
+
+const SquareImage = styled.Image`
+  width: 100px;
+  height: 100px;
+  margin-bottom: 25px;
+`
 
 class AddMeasure extends React.Component {
   static navigationOptions = {
@@ -55,7 +62,7 @@ class AddMeasure extends React.Component {
         keyboardVerticalOffset={HEADER_NAVIGATION_HEIGHT + 50}
       >
         <FlexView>
-          <Image style={{ width: 100, height: 100, marginBottom: 25 }} source={logo} />
+          <SquareImage source={logo} />
           <NumberInput
             autoFocus
             blurOnSubmit={false}
