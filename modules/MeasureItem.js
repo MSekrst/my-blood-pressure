@@ -17,26 +17,42 @@ const Container = styled.View`
   border-bottom-color: ${colors.primary};
 `
 
+const Wrapper = styled.View`
+  flex: 1 1;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+`
+
 const EntryText = styled.Text`
   font-size: 18px;
 `
 
-export const MeasureItem = ({ timestamp, hearthRate, systolicPressure, diastolicPressure }) => {
+export const MeasureItem = ({ timestamp, heartRate, hearthRate, systolicPressure, diastolicPressure }) => {
+  // TODO: color coding
   return (
     <Container>
-      <EntryText style={{ fontSize: 15 }}>
-        {`${getFormattedDateString(timestamp)} ${getFormattedTimeString(timestamp)}`}
-      </EntryText>
-      <EntryText style={{ fontSize: 20 }}>{`${systolicPressure}/${diastolicPressure}`}</EntryText>
-      <EntryText>{hearthRate}</EntryText>
+      <Wrapper>
+        <EntryText style={{ fontSize: 15 }}>{`${getFormattedDateString(timestamp)}`}</EntryText>
+        <EntryText style={{ fontSize: 15, marginLeft: 8 }}>{`${getFormattedTimeString(timestamp)}`}</EntryText>
+      </Wrapper>
+      <Wrapper style={{ justifyContent: 'flex-end' }}>
+        <EntryText style={{ fontSize: 20 }}>{`${systolicPressure}/${diastolicPressure}`}</EntryText>
+        <EntryText style={{ marginLeft: 16 }}>{heartRate || hearthRate}</EntryText>
+      </Wrapper>
     </Container>
   )
 }
 
 export const MeasureItemHeader = () => (
   <Container>
-    <EntryText>Date / Time</EntryText>
-    <EntryText style={{ marginLeft: 64 }}>BP (mmHg)</EntryText>
-    <EntryText>HR (bpm)</EntryText>
+    <Wrapper>
+      <EntryText>Date</EntryText>
+      <EntryText style={{ marginLeft: 8 }}>Time</EntryText>
+    </Wrapper>
+    <Wrapper style={{ justifyContent: 'flex-end' }}>
+      <EntryText>Pressure</EntryText>
+      <EntryText style={{ marginLeft: 16 }}>HR</EntryText>
+    </Wrapper>
   </Container>
 )

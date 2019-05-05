@@ -30,7 +30,7 @@ class AddMeasure extends React.Component {
 
   setDiastolicPressure = diastolicPressure => this.setState({ diastolicPressure })
 
-  setHearthRate = hearthRate => this.setState({ hearthRate })
+  setHeartRate = heartRate => this.setState({ heartRate })
 
   saveMeasure = async () => {
     // TODO: add validation
@@ -53,7 +53,7 @@ class AddMeasure extends React.Component {
   }
 
   render() {
-    const { systolicPressure, diastolicPressure, hearthRate } = this.state
+    const { systolicPressure, diastolicPressure, heartRate } = this.state
 
     return (
       <KeyboardAvoidingView
@@ -87,8 +87,8 @@ class AddMeasure extends React.Component {
             ref={this.thirdInput}
             label="Hearth rate"
             placeholder="60"
-            value={hearthRate}
-            onChangeText={this.setHearthRate}
+            value={heartRate}
+            onChangeText={this.setHeartRate}
             onSubmitEditing={this.saveMeasure}
           />
           <Button onPress={this.saveMeasure}>Save</Button>
