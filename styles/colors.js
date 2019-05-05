@@ -10,3 +10,10 @@ export const secondary = '#f1f1f1'
 // STATE COLORS
 export const active = primary
 export const base = '#d7d7d7'
+
+export const measureColorCoding = {
+  low: '#3138f1',
+  fine: '#3df030',
+  slightHigh: '#efa92f',
+  high: '#f23f32',
+}

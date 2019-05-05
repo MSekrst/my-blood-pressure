@@ -1,5 +1,5 @@
 import React from 'react'
-import { Dimensions, TouchableNativeFeedback, Alert } from 'react-native'
+import { Dimensions, TouchableNativeFeedback, Alert, Text } from 'react-native'
 import styled from 'styled-components/native'
 
 import { colors } from '../styles'
@@ -14,7 +14,7 @@ const Container = styled.View`
   /* margin: 8px; */
   padding: 16px;
   border-bottom-width: 1px;
-  border-bottom-color: ${colors.primary};
+  border-bottom-color: ${colors.secondary};
 `
 
 const Wrapper = styled.View`
@@ -40,41 +40,70 @@ DATE | TIME | MEASURE | HR
 
 */
 
+const getMeasureColor = ({ systolicPressure, diastolicPressure }) => {
+  let systolicValue = colors.measureColorCoding.fine
+
+  if (systolicPressure <= 90) {
+    systolicValue = colors.measureColorCoding.low
+  } else if (systolicPressure > 120 && systolicPressure < 140) {
+    systolicValue = colors.measureColorCoding.slightHigh
+  } else if (systolicPressure >= 140) {
+    systolicValue = colors.measureColorCoding.high
+  }
+
+  let diastolicValue = colors.measureColorCoding.fine
+
+  if (diastolicPressure <= 60) {
+    diastolicValue = colors.measureColorCoding.low
+  } else if (diastolicPressure > 80 && diastolicPressure < 90) {
+    diastolicValue = colors.measureColorCoding.slightHigh
+  } else if (diastolicPressure >= 90) {
+    diastolicValue = colors.measureColorCoding.high
+  }
+
+  return { systolicValue, diastolicValue }
+}
+
 export const MeasureItem = ({
   timestamp,
   heartRate,
-  hearthRate,
   systolicPressure,
   diastolicPressure,
   id,
   onDeletePress,
-}) => (
-  <TouchableNativeFeedback
-    style={{ flex: 1 }}
-    onLongPress={() => {
-      Alert.alert('Delete', 'Do you want to delete selected measure?', [
-        { text: 'Cancel', style: 'cancel' },
-        { text: 'Delete', onPress: () => onDeletePress(id), style: 'positive' },
-      ])
-    }}
-  >
-    <Container>
-      {/* TODO: color code measures */}
-      <Wrapper>
-        <EntryText style={{ minWidth: DATE_WIDTH, fontSize: 15 }}>{`${getFormattedDateString(timestamp)}`}</EntryText>
-        <EntryText style={{ minWidth: TIME_WIDTH, fontSize: 15, marginLeft: 16 }}>
-          {`${getFormattedTimeString(timestamp)}`}
-        </EntryText>
-      </Wrapper>
-      <Wrapper style={{ justifyContent: 'flex-end' }}>
-        <EntryText style={{ minWidth: MEASURE_WIDTH, fontSize: 20 }}>
-          {`${systolicPressure}/${diastolicPressure}`}
-        </EntryText>
-        <EntryText style={{ minWidth: HR_WIDTH, marginLeft: 16 }}>{heartRate || hearthRate}</EntryText>
-      </Wrapper>
-    </Container>
-  </TouchableNativeFeedback>
-)
+}) => {
+  const { diastolicValue, systolicValue } = getMeasureColor({ systolicPressure, diastolicPressure })
+
+  return (
+    <TouchableNativeFeedback
+      style={{ flex: 1 }}
+      onLongPress={() => {
+        Alert.alert('Delete', 'Do you want to delete selected measure?', [
+          { text: 'Cancel', style: 'cancel' },
+          { text: 'Delete', onPress: () => onDeletePress(id), style: 'positive' },
+        ])
+      }}
+    >
+      <Container>
+        <Wrapper>
+          <EntryText style={{ minWidth: DATE_WIDTH, fontSize: 15 }}>{`${getFormattedDateString(timestamp)}`}</EntryText>
+          <EntryText style={{ minWidth: TIME_WIDTH, fontSize: 15, marginLeft: 16 }}>
+            {`${getFormattedTimeString(timestamp)}`}
+          </EntryText>
+        </Wrapper>
+        <Wrapper style={{ justifyContent: 'flex-end' }}>
+          <EntryText style={{ minWidth: MEASURE_WIDTH, fontSize: 20 }}>
+            <Text style={{ color: systolicValue }}>{systolicPressure}</Text>
+            <Text>/</Text>
+            <Text style={{ color: diastolicValue }}>{diastolicPressure}</Text>
+            {/* {`${systolicPressure}/${diastolicPressure}`} */}
+          </EntryText>
+          <EntryText style={{ minWidth: HR_WIDTH, marginLeft: 16 }}>{heartRate}</EntryText>
+        </Wrapper>
+      </Container>
+    </TouchableNativeFeedback>
+  )
+}
 
 export const MeasureItemHeader = () => (
   <Container>
