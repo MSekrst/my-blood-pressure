@@ -14,6 +14,17 @@ const SquareImage = styled.Image`
   margin-bottom: 25px;
 `
 
+const areMeasuresValid = ({ systolicPressure = 0, diastolicPressure = 0, heartRate = 0 }) => {
+  return (
+    systolicPressure > 0 &&
+    systolicPressure < 500 &&
+    diastolicPressure > 0 &&
+    diastolicPressure < 500 &&
+    heartRate > 0 &&
+    heartRate < 500
+  )
+}
+
 class AddMeasure extends React.Component {
   static navigationOptions = {
     headerTitle: 'Add measure',
@@ -34,6 +45,11 @@ class AddMeasure extends React.Component {
 
   saveMeasure = async () => {
     const measures = (await getData(MEASURES_STORAGE_KEY)) || []
+
+    if (!areMeasuresValid(this.state)) {
+      console.error('Invalid measure')
+      return
+    }
 
     const measureWithMetadata = { ...this.state, timestamp: Date.now(), id: getMeasureId() }
 
