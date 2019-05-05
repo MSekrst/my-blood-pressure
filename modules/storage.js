@@ -37,8 +37,6 @@ const setId = async () => {
       latestId = m.id
     }
   })
-
-  console.log('ID is', latestId)
 }
 
 // set current id
