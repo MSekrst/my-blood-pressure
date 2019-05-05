@@ -3,7 +3,7 @@ import { KeyboardAvoidingView } from 'react-native'
 import styled from 'styled-components/native'
 
 import { NumberInput, FlexView, Button } from '../components'
-import { getData, storeData } from '../modules'
+import { getData, storeData, getMeasureId } from '../modules'
 import { MEASURES_STORAGE_KEY, HEADER_NAVIGATION_HEIGHT } from '../const'
 import { colors } from '../styles'
 import logo from '../assets/logo.png'
@@ -33,11 +33,9 @@ class AddMeasure extends React.Component {
   setHeartRate = heartRate => this.setState({ heartRate })
 
   saveMeasure = async () => {
-    // TODO: add validation
-
     const measures = (await getData(MEASURES_STORAGE_KEY)) || []
 
-    const measureWithMetadata = { ...this.state, timestamp: Date.now() }
+    const measureWithMetadata = { ...this.state, timestamp: Date.now(), id: getMeasureId() }
 
     measures.push(measureWithMetadata)
 

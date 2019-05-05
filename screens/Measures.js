@@ -1,20 +1,28 @@
 import React from 'react'
-import { Text, StatusBar, ScrollView } from 'react-native'
+import { StatusBar, ScrollView, ActivityIndicator, Text } from 'react-native'
 import { createAppContainer, createStackNavigator } from 'react-navigation'
+import styled from 'styled-components/native'
 
-import { FlexView, FloatingButton } from '../components'
+import { FlexView, FloatingButton, Button } from '../components'
 import * as I from '../icons'
 import { MEASURES_STORAGE_KEY } from '../const'
 import { getData, MeasureItem, MeasureItemHeader } from '../modules'
+import { colors } from '../styles'
 
 import AddMeasures from './AddMeasure'
+
+const Heading = styled.Text`
+  font-size: 25px;
+  color: ${colors.primary};
+  padding: 12px;
+`
 
 class Measures extends React.Component {
   static navigationOptions = {
     header: null,
   }
 
-  state = { measures: [] }
+  state = {}
 
   willFocusSubscription = null
 
@@ -39,16 +47,33 @@ class Measures extends React.Component {
 
     return (
       <FlexView style={{ marginTop: StatusBar.currentHeight }}>
-        <Text>All Measures</Text>
-        <ScrollView>
-          {measures.length > 0 && <MeasureItemHeader />}
-          {measures.map(measure => (
-            <MeasureItem key={measure.timestamp} {...measure} />
-          ))}
-        </ScrollView>
-        <FloatingButton onPress={() => this.props.navigation.navigate('AddMeasures')}>
-          <I.Add />
-        </FloatingButton>
+        <Heading style={{}}>All Measures</Heading>
+        {!measures && <ActivityIndicator style={{ flex: 1 }} size="large" color={colors.primary} />}
+        {measures && (
+          <>
+            {measures.length > 0 && (
+              <>
+                <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>
+                  {measures.length > 0 && <MeasureItemHeader />}
+                  {measures.map(measure => (
+                    <MeasureItem key={measure.timestamp} {...measure} />
+                  ))}
+                </ScrollView>
+                <FloatingButton onPress={() => this.props.navigation.navigate('AddMeasures')}>
+                  <I.Add />
+                </FloatingButton>
+              </>
+            )}
+            {!measures.length && (
+              <FlexView>
+                <Text style={{ fontSize: 18 }}>No measures recorded</Text>
+                <Button style={{ width: 190 }} onPress={() => this.props.navigation.navigate('AddMeasures')}>
+                  Enter measure
+                </Button>
+              </FlexView>
+            )}
+          </>
+        )}
       </FlexView>
     )
   }

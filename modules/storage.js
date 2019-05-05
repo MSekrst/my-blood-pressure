@@ -1,5 +1,13 @@
 import { AsyncStorage } from 'react-native'
 
+let measureCount = 0
+
+export const getMeasureId = () => {
+  measureCount += 1
+
+  return measureCount
+}
+
 export const storeData = async (key, value) => {
   try {
     await AsyncStorage.setItem(key, JSON.stringify(value))
