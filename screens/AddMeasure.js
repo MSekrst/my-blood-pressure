@@ -3,7 +3,7 @@ import { KeyboardAvoidingView } from 'react-native'
 import styled from 'styled-components/native'
 
 import { NumberInput, FlexView, Button } from '../components'
-import { getData, storeData, getMeasureId } from '../modules'
+import { getData, storeData, getMeasureId, showError } from '../modules'
 import { MEASURES_STORAGE_KEY, HEADER_NAVIGATION_HEIGHT } from '../const'
 import { colors } from '../styles'
 import logo from '../assets/logo.png'
@@ -47,7 +47,7 @@ class AddMeasure extends React.Component {
     const measures = (await getData(MEASURES_STORAGE_KEY)) || []
 
     if (!areMeasuresValid(this.state)) {
-      console.error('Invalid measure')
+      showError('Invalid measures data')
       return
     }
 
@@ -61,8 +61,7 @@ class AddMeasure extends React.Component {
       const { navigation } = this.props
       navigation.goBack()
     } else {
-      // TODO: show error toast
-      console.error('Saving failed!')
+      showError('Saving of measures failed')
     }
   }
 
