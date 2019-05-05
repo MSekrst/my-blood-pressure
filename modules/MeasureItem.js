@@ -1,5 +1,5 @@
 import React from 'react'
-import { Dimensions } from 'react-native'
+import { Dimensions, TouchableNativeFeedback, Alert } from 'react-native'
 import styled from 'styled-components/native'
 
 import { colors } from '../styles'
@@ -11,8 +11,8 @@ const Container = styled.View`
   align-items: center;
   flex-direction: row;
   width: ${Dimensions.get('window').width - 16};
-  margin: 8px;
-  padding: 8px;
+  /* margin: 8px; */
+  padding: 16px;
   border-bottom-width: 1px;
   border-bottom-color: ${colors.primary};
 `
@@ -40,10 +40,26 @@ DATE | TIME | MEASURE | HR
 
 */
 
-export const MeasureItem = ({ timestamp, heartRate, hearthRate, systolicPressure, diastolicPressure }) => {
-  // TODO: color coding
-  return (
+export const MeasureItem = ({
+  timestamp,
+  heartRate,
+  hearthRate,
+  systolicPressure,
+  diastolicPressure,
+  id,
+  onDeletePress,
+}) => (
+  <TouchableNativeFeedback
+    style={{ flex: 1 }}
+    onLongPress={() => {
+      Alert.alert('Delete', 'Do you want to delete selected measure?', [
+        { text: 'Cancel', style: 'cancel' },
+        { text: 'Delete', onPress: () => onDeletePress(id), style: 'positive' },
+      ])
+    }}
+  >
     <Container>
+      {/* TODO: color code measures */}
       <Wrapper>
         <EntryText style={{ minWidth: DATE_WIDTH, fontSize: 15 }}>{`${getFormattedDateString(timestamp)}`}</EntryText>
         <EntryText style={{ minWidth: TIME_WIDTH, fontSize: 15, marginLeft: 16 }}>
@@ -57,8 +73,8 @@ export const MeasureItem = ({ timestamp, heartRate, hearthRate, systolicPressure
         <EntryText style={{ minWidth: HR_WIDTH, marginLeft: 16 }}>{heartRate || hearthRate}</EntryText>
       </Wrapper>
     </Container>
-  )
-}
+  </TouchableNativeFeedback>
+)
 
 export const MeasureItemHeader = () => (
   <Container>

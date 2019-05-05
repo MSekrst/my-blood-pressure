@@ -6,7 +6,7 @@ import styled from 'styled-components/native'
 import { FlexView, FloatingButton, Button } from '../components'
 import * as I from '../icons'
 import { MEASURES_STORAGE_KEY } from '../const'
-import { getData, MeasureItem, MeasureItemHeader } from '../modules'
+import { getData, MeasureItem, MeasureItemHeader, storeData, showError } from '../modules'
 import { colors } from '../styles'
 
 import AddMeasures from './AddMeasure'
@@ -37,9 +37,23 @@ class Measures extends React.Component {
   }
 
   getMeasures = async () => {
-    const measures = await getData(MEASURES_STORAGE_KEY)
+    const measures = (await getData(MEASURES_STORAGE_KEY)) || []
 
     this.setState({ measures })
+  }
+
+  removeMeasure = async removedId => {
+    const measures = (await getData(MEASURES_STORAGE_KEY)) || []
+
+    const remainingMeasures = measures.filter(m => m.id !== removedId)
+
+    const res = await storeData(MEASURES_STORAGE_KEY, remainingMeasures)
+
+    if (res) {
+      this.getMeasures()
+    } else {
+      showError('Deleting failed')
+    }
   }
 
   render() {
@@ -56,7 +70,7 @@ class Measures extends React.Component {
                 <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>
                   {measures.length > 0 && <MeasureItemHeader />}
                   {measures.map(measure => (
-                    <MeasureItem key={measure.timestamp} {...measure} />
+                    <MeasureItem key={measure.id} {...measure} onDeletePress={this.removeMeasure} />
                   ))}
                 </ScrollView>
                 <FloatingButton onPress={() => this.props.navigation.navigate('AddMeasures')}>

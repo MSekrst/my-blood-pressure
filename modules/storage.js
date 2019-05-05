@@ -1,11 +1,13 @@
 import { AsyncStorage } from 'react-native'
 
-let measureCount = 0
+import { MEASURES_STORAGE_KEY } from '../const'
+
+let latestId = 0
 
 export const getMeasureId = () => {
-  measureCount += 1
+  latestId += 1
 
-  return measureCount
+  return latestId
 }
 
 export const storeData = async (key, value) => {
@@ -27,6 +29,19 @@ export const getData = async key => {
   }
 }
 
-// import { MEASURES_STORAGE_KEY } from '../const'
+const setId = async () => {
+  const measures = (await getData(MEASURES_STORAGE_KEY)) || []
+
+  measures.forEach(m => {
+    if (m.id > latestId) {
+      latestId = m.id
+    }
+  })
+
+  console.log('ID is', latestId)
+}
+
+// set current id
+setId()
 
 // AsyncStorage.removeItem(MEASURES_STORAGE_KEY)

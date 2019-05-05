@@ -1,4 +1,4 @@
 export * from './tabNavigationOptions'
 export * from './storage'
 export * from './MeasureItem'
-export * from './Error'
+export * from './error'

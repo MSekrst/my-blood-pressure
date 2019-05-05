@@ -3,8 +3,8 @@ import { KeyboardAvoidingView } from 'react-native'
 import styled from 'styled-components/native'
 
 import { NumberInput, FlexView, Button } from '../components'
-import { getData, storeData, getMeasureId, showError } from '../modules'
 import { MEASURES_STORAGE_KEY, HEADER_NAVIGATION_HEIGHT } from '../const'
+import { getData, storeData, getMeasureId, showError } from '../modules'
 import { colors } from '../styles'
 import logo from '../assets/logo.png'
 
